@@ -55,8 +55,8 @@ class Tablero:
                 orientacion = np.random.choice(list(ORIENTACIONES.keys())) #orientacion aleatoria
                 cambio_fila, cambio_columna = ORIENTACIONES[orientacion]
 
-                #calcular las posiciones del barco segun el tamaño y la orientacion
-                posiciones = []
+                       
+                posiciones = []            #calcular las posiciones del barco segun el tamaño y la orientacion
                 for i in range(tamano):
                     nueva_fila = fila + i * cambio_fila
                     nueva_columna = columna + i * cambio_columna
