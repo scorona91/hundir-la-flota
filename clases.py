@@ -32,8 +32,7 @@ class Tablero:
             print(" ".join(linea))  #imprime la linea con espacios entre los simbolos 
             
     def recibir_disparo(self,fila,columna):
-        if not (0 <= fila <self.tamano and 0 <= columna < self.tamano):  # comprobar que las coordenadas sean validas 
-            return "invalido"     
+           
         if self.disparos[fila,columna] != AGUA:  #COMPROBAR SI YA SE HA DISPARADO EN ESA CASILLA
             return RESULTADO_DISPARO_REPETIDO
         if self.tablero[fila,columna]==BARCO: # COMPRBAR SI HAY UN BARCO EN ESA CASILLA 
