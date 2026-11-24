@@ -27,3 +27,17 @@ ORIENTACIONES = {"norte": (-1, 0), "sur": (1, 0), "este": (0, 1), "oeste": (0, -
 # Identificadores de los jugadores.
 ID_JUGADOR = "jugador"
 ID_MAQUINA = "maquina"
+
+# Compatibilidad con funciones.py
+CASILLA_VACIA = AGUA
+
+INSTRUCCIONES = """
+HUNDIR LA FLOTA
+El objetivo es hundir todos los barcos del rival.
+Introduce las coordenadas de tu disparo como fila,columna.
+Las filas y columnas van del 0 al 9.
+"""
+
+MENSAJE_COORDENADAS = "Introduce fila y columna (ejemplo 2,5): "
+MENSAJE_ERROR = "Entrada incorrecta. Introduce dos números separados por una coma."
+MENSAJE_FUERA = "Coordenadas fuera del tablero. Prueba otra vez."
