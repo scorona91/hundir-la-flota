@@ -1,7 +1,7 @@
 # IMPORTACIONES
 from clases import Tablero
 from funciones import mostrar_instrucciones, pedir_coordenadas, disparo_maquina
-from variables import ID_JUGADOR, ID_MAQUINA, TOTAL_CASILLAS_BARCOS
+from variables import ID_JUGADOR, ID_MAQUINA
 
 # CREAR LOS TABLEROS
 tablero_jugador = Tablero(ID_JUGADOR)
@@ -51,6 +51,7 @@ while True:
     disparo = disparo_maquina(tablero_jugador.disparos)
 
     if disparo is None:
+        print("La máquina no tiene más casillas disponibles.")
         break
 
     fila, columna = disparo
@@ -83,6 +84,8 @@ if tablero_maquina.vidas == 0:
 
 elif tablero_jugador.vidas == 0:
     print("La máquina ha hundido todos tus barcos. ¡HAS PERDIDO!")
+else:
+    print("La partida ha terminado porque no quedan disparos disponibles.")
 
 # MOSTRAR EL ESTADO FINAL DE LOS TABLEROS
 print("\nTu tablero final:")
