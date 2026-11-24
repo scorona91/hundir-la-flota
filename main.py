@@ -22,8 +22,9 @@ tablero_jugador.mostrar()
 print("\nTablero de la máquina:")
 tablero_maquina.mostrar(ocultar_barcos=True)
 
+
 # DESARROLLO DE LA PARTIDA
-while tablero_jugador.vidas > 0 and tablero_maquina.vidas > 0:
+while True:
 
     # TURNO DEL JUGADOR
     print("\n--- TU TURNO ---")
@@ -69,6 +70,10 @@ while tablero_jugador.vidas > 0 and tablero_maquina.vidas > 0:
 
     print("\nTablero de la máquina:")
     tablero_maquina.mostrar(ocultar_barcos=True)
+
+    # COMPROBAR SI LA MÁQUINA HA GANADO
+    if tablero_jugador.vidas == 0:
+        break
 
 # FINAL DE LA PARTIDA
 print("\n--- FIN DE LA PARTIDA ---")
