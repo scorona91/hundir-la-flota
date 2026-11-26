@@ -1,7 +1,13 @@
 # IMPORTACIONES
 from clases import Tablero
 from funciones import mostrar_instrucciones, pedir_coordenadas, disparo_maquina
-from variables import ID_JUGADOR, ID_MAQUINA
+from variables import (
+    ID_JUGADOR,
+    ID_MAQUINA,
+    RESULTADO_DISPARO_AGUA,
+    RESULTADO_DISPARO_TOCADO,
+    RESULTADO_DISPARO_REPETIDO
+)
 
 # CREAR LOS TABLEROS
 tablero_jugador = Tablero(ID_JUGADOR)
@@ -12,8 +18,6 @@ tablero_jugador.colocar_barcos()
 tablero_maquina.colocar_barcos()
 
 # INICIO DE LA PARTIDA
-print("\n¡BIENVENIDO A HUNDIR LA FLOTA!")
-
 mostrar_instrucciones()
 
 print("\nTu tablero:")
@@ -21,7 +25,6 @@ tablero_jugador.mostrar()
 
 print("\nTablero de la máquina:")
 tablero_maquina.mostrar(ocultar_barcos=True)
-
 
 # DESARROLLO DE LA PARTIDA
 while True:
@@ -32,38 +35,56 @@ while True:
 
     resultado = tablero_maquina.recibir_disparo(fila, columna)
 
-    if resultado == "repetido":
+    if resultado == RESULTADO_DISPARO_REPETIDO:
         print("Ya habías disparado en esa casilla. Inténtalo de nuevo.")
         continue
 
-    elif resultado == "tocado":
+    if resultado == RESULTADO_DISPARO_TOCADO:
         print("¡Has tocado un barco!")
+        tablero_maquina.mostrar(ocultar_barcos=True)
 
-    elif resultado == "agua":
+        if tablero_maquina.vidas == 0:
+            break
+
+        continue
+
+    if resultado == RESULTADO_DISPARO_AGUA:
         print("¡Agua! No has acertado.")
-
-    # COMPROBAR SI EL JUGADOR HA GANADO
-    if tablero_maquina.vidas == 0:
-        break
 
     # TURNO DE LA MÁQUINA
     print("\n--- TURNO DE LA MÁQUINA ---")
-    disparo = disparo_maquina(tablero_jugador.disparos)
+    maquina_sin_disparos = False
 
-    if disparo is None:
-        print("La máquina no tiene más casillas disponibles.")
+    while True:
+        disparo = disparo_maquina(tablero_jugador.disparos)
+
+        if disparo is None:
+            print("La máquina no tiene más casillas disponibles.")
+            maquina_sin_disparos = True
+            break
+
+        fila, columna = disparo
+        print(f"La máquina dispara en la posición {fila}, {columna}")
+
+        resultado = tablero_jugador.recibir_disparo(fila, columna)
+
+        if resultado == RESULTADO_DISPARO_TOCADO:
+            print("¡La máquina ha tocado uno de tus barcos!")
+            tablero_jugador.mostrar()
+
+            if tablero_jugador.vidas == 0:
+                break
+
+            continue
+
+        if resultado == RESULTADO_DISPARO_AGUA:
+            print("La máquina ha fallado.")
+
         break
 
-    fila, columna = disparo
-    print(f"La máquina dispara en la posición {fila}, {columna}")
-
-    resultado = tablero_jugador.recibir_disparo(fila, columna)
-
-    if resultado == "tocado":
-        print("¡La máquina ha tocado uno de tus barcos!")
-
-    elif resultado == "agua":
-        print("La máquina ha fallado.")
+    # COMPROBAR SI LA PARTIDA HA TERMINADO
+    if tablero_jugador.vidas == 0 or maquina_sin_disparos:
+        break
 
     # MOSTRAR LOS TABLEROS ACTUALIZADOS
     print("\nTu tablero:")
@@ -71,10 +92,6 @@ while True:
 
     print("\nTablero de la máquina:")
     tablero_maquina.mostrar(ocultar_barcos=True)
-
-    # COMPROBAR SI LA MÁQUINA HA GANADO
-    if tablero_jugador.vidas == 0:
-        break
 
 # FINAL DE LA PARTIDA
 print("\n--- FIN DE LA PARTIDA ---")
